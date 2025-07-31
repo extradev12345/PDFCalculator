@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>PDFCalculator Documentation</title>
+<style>
+  /* Root variables for light & dark */
+  :root {
+    --bg-light: #f5f7fa;
+    --text-light: #222;
+    --primary-light: #2f80ed;
+
+    --bg-dark: #1e1e2f;
+    --text-dark: #d4d4dc;
+    --primary-dark: #4ea1d3;
+
+    --transition-speed: 0.3s;
+  }
+
+  /* Base styles */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0; padding: 0;
+    background: var(--bg-light);
+    color: var(--text-light);
+    transition: background var(--transition-speed), color var(--transition-speed);
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* Dark mode */
+  body.dark {
+    background: var(--bg-dark);
+    color: var(--text-dark);
+  }
+
+  /* Sidebar */
+  nav {
+    width: 250px;
+    background: #e1e7f0;
+    border-right: 1px solid #ccc;
+    padding: 1rem;
+    box-sizing: border-box;
+    transition: background var(--transition-speed);
+  }
+  body.dark nav {
+    background: #2c2c44;
+    border-color: #444;
+  }
+
+  nav h2 {
+    margin-top: 0;
+    color: var(--primary-light);
+  }
+  body.dark nav h2 {
+    color: var(--primary-dark);
+  }
+
+  nav ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  nav ul li {
+    margin: 0.75rem 0;
+  }
+
+  nav ul li a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: 600;
+    transition: color var(--transition-speed);
+  }
+
+  nav ul li a:hover {
+    color: var(--primary-light);
+  }
+  body.dark nav ul li a:hover {
+    color: var(--primary-dark);
+  }
+
+  /* Content area */
+  main {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+    box-sizing: border-box;
+  }
+
+  main h1 {
+    margin-top: 0;
+    font-weight: 700;
+  }
+
+  main p {
+    line-height: 1.6;
+  }
+
+  /* Theme toggle button */
+  .theme-toggle {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    background: var(--primary-light);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    transition: background var(--transition-speed);
+  }
+
+  body.dark .theme-toggle {
+    background: var(--primary-dark);
+  }
+</style>
+</head>
+<body>
+<nav>
+  <h2>PDFCalculator Docs</h2>
+  <ul>
+    <li><a href="#overview">Overview</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#pricing">Pricing Calculation</a></li>
+    <li><a href="#about">About Minius Lab</a></li>
+  </ul>
+</nav>
+
+<main>
+  <section id="overview">
+    <h1>Welcome to PDFCalculator Documentation</h1>
+    <p>Your one-stop guide for the PDFCalculator app, your trusty tool for counting pages and estimating printing costs.</p>
+  </section>
+
+  <section id="features">
+    <h2>Features</h2>
+    <ul>
+      <li>Count total pages in PDF files within a folder.</li>
+      <li>Calculate printing costs with customizable price per sheet.</li>
+      <li>Duplex (double-sided) printing support.</li>
+      <li>Multiple pages per sheet printing options.</li>
+      <li>Clean, responsive, and theme toggleable UI.</li>
+    </ul>
+  </section>
+
+  <section id="usage">
+    <h2>How to Use</h2>
+    <ol>
+      <li>Click “Browse” to select a folder containing your PDF files.</li>
+      <li>The app will scan and show total pages and individual file counts.</li>
+      <li>Set the price per sheet and printing options.</li>
+      <li>Calculate the estimated printing cost instantly.</li>
+      <li>Use the toggle button (top right) to switch between light and dark themes.</li>
+    </ol>
+  </section>
+
+  <section id="pricing">
+    <h2>Pricing Calculation Details</h2>
+    <p>Price is calculated based on the total number of sheets after accounting for pages per sheet and duplex printing options.</p>
+    <p>Sheets = ceil(total pages / pages per sheet / (duplex ? 2 : 1))</p>
+    <p>Estimated cost = price per sheet × sheets</p>
+  </section>
+
+  <section id="about">
+    <h2>About Minius Lab</h2>
+    <p>PDFCalculator is developed by <strong>Minius Lab</strong> © 2025. Our mission is to build simple, useful software tools that save you time and headaches.</p>
+    <p>Visit us at miniuslabs@gmail.com</a></p>
+  </section>
+</main>
+
+<button class="theme-toggle" id="themeToggle">Toggle Theme</button>
+
+<script>
+  const toggleBtn = document.getElementById('themeToggle');
+  const body = document.body;
+
+  // Apply saved theme or system preference
+  const savedTheme = localStorage.getItem('pdfcalc-theme');
+  if (savedTheme) {
+    if (savedTheme === 'dark') {
+      body.classList.add('dark');
+    }
+  } else {
+    // system preference
+    if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      body.classList.add('dark');
+    }
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    body.classList.toggle('dark');
+    if(body.classList.contains('dark')) {
+      localStorage.setItem('pdfcalc-theme', 'dark');
+    } else {
+      localStorage.setItem('pdfcalc-theme', 'light');
+    }
+  });
+</script>
+</body>
+</html>
